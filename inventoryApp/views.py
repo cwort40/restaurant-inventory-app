@@ -279,7 +279,7 @@ class RestaurantSummaryView(LoginRequiredMixin, View):
         return render(request, "inventoryApp/insights.html", context)
 
 
-# Define IngredientChartView to display a doughnut chart of ingredients
+# Define IngredientChartView to display a bar chart of ingredients
 class IngredientChartView(LoginRequiredMixin, BaseLineChartView):
     def get_labels(self):
         # Return the names of the ingredients as labels
@@ -302,7 +302,7 @@ ingredient_chart = TemplateView.as_view(template_name='inventoryApp/insights.htm
 ingredient_chart_json = IngredientChartView.as_view()
 
 
-# Define PurchaseLineChartView to display a line chart of purchases
+# Define PurchaseLineChartView to display a bar chart of purchases
 class PurchaseChartView(LoginRequiredMixin, BaseLineChartView):
     def get_labels(self):
         # Return the days of the week labels.
