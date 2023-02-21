@@ -322,7 +322,7 @@ class PurchaseChartView(LoginRequiredMixin, BaseLineChartView):
             item_purchases = Purchase.objects.filter(menu_item=item, timestamp__gte=one_week_ago, user=self.request.user)
             day_counts = [0, 0, 0, 0, 0, 0, 0]
             for purchase in item_purchases:
-                day_counts[(purchase.timestamp.weekday() + 1) % 7] += 1
+                day_counts[(purchase.timestamp.weekday()) % 7] += 1
             data.append(day_counts)
         return data
 
