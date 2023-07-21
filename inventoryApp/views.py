@@ -279,7 +279,7 @@ class RestaurantSummaryView(LoginRequiredMixin, View):
         return render(request, "inventoryApp/insights.html", context)
 
 
-# Define IngredientChartView to display a bar chart of ingredients
+# Define IngredientChartView to display a doughnut chart of ingredients
 class IngredientChartView(LoginRequiredMixin, BaseLineChartView):
     def get_labels(self):
         # Return the names of the ingredients as labels
@@ -287,12 +287,15 @@ class IngredientChartView(LoginRequiredMixin, BaseLineChartView):
 
     def get_providers(self):
         # Return names of datasets with unit
-        return ["{} ({})".format(ingredient.name, ingredient.unit) for ingredient in
-                Ingredient.objects.all().filter(user=self.request.user)]
+        providers = ["{} ({})".format(ingredient.name, ingredient.unit) for ingredient in
+                     Ingredient.objects.all().filter(user=self.request.user)]
+        return providers if providers else None
 
     def get_data(self):
         # Return the quantities of the ingredients as data
-        return ["{:.1f}".format(ingredient.quantity) for ingredient in Ingredient.objects.all().filter(user=self.request.user)]
+        data = ["{:.1f}".format(ingredient.quantity) for ingredient in
+                Ingredient.objects.all().filter(user=self.request.user)]
+        return data if data else None
 
 
 # Define view to render reports template
@@ -302,7 +305,7 @@ ingredient_chart = TemplateView.as_view(template_name='inventoryApp/insights.htm
 ingredient_chart_json = IngredientChartView.as_view()
 
 
-# Define PurchaseLineChartView to display a bar chart of purchases
+# Define PurchaseLineChartView to display a line chart of purchases
 class PurchaseChartView(LoginRequiredMixin, BaseLineChartView):
     def get_labels(self):
         # Return the days of the week labels.
@@ -310,7 +313,8 @@ class PurchaseChartView(LoginRequiredMixin, BaseLineChartView):
 
     def get_providers(self):
         # Return names of menu items.
-        return [item.title for item in MenuItem.objects.all().filter(user=self.request.user)]
+        providers = [item.title for item in MenuItem.objects.all().filter(user=self.request.user)]
+        return providers if providers else None
 
     def get_data(self):
         # Return the quantities purchased of each menu item as data.
@@ -319,12 +323,13 @@ class PurchaseChartView(LoginRequiredMixin, BaseLineChartView):
         one_week_ago = today - timedelta(days=7)
 
         for item in MenuItem.objects.all():
-            item_purchases = Purchase.objects.filter(menu_item=item, timestamp__gte=one_week_ago, user=self.request.user)
+            item_purchases = Purchase.objects.filter(menu_item=item, timestamp__gte=one_week_ago,
+                                                     user=self.request.user)
             day_counts = [0, 0, 0, 0, 0, 0, 0]
             for purchase in item_purchases:
                 day_counts[(purchase.timestamp.weekday()) % 7] += 1
             data.append(day_counts)
-        return data
+        return data if data else None
 
 
 # Define view to render reports template
