@@ -21,3 +21,6 @@ UNIT_CONVERSIONS = {
     'oz': 28.3495,
     'lb': 453.592,
 }
+
+VOLUME_UNITS = {'tsp', 'tbsp', 'fl-oz', 'cup', 'pint', 'quart', 'gallon'}
+MASS_UNITS = {'oz', 'lb'}

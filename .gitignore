@@ -2,4 +2,11 @@
 .idea/
 db.sqlite3
 exit
-__pycache__/
+__pycache__
+/venv/
+env/
+.venv/
+*.pyc
+*.pyo
+*.egg-info/
+
