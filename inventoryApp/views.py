@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import logout, login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -14,6 +15,7 @@ from django.views.generic import ListView, UpdateView, CreateView, DeleteView, T
 from inventoryApp.constants.util import UnitConversionUtil
 from inventoryApp.forms import IngredientForm, MenuItemForm, RecipeRequirementForm, CustomUserCreationForm
 from inventoryApp.models import Ingredient, MenuItem, Purchase, RecipeRequirement
+from inventoryApp.util import invalidate_menu_cache
 
 
 # Define 2 functions to render HTML pages
@@ -187,19 +189,30 @@ class PurchaseDeleteView(LoginRequiredMixin, DeleteView):
 
 # Define ListView to display a list of menu items
 class MenuListView(LoginRequiredMixin, ListView):
-    # Displays a list of menu items
     template_name = 'inventoryApp/menu.html'
     model = MenuItem
     ordering = ['title']
     paginate_by = 5
 
     def get_queryset(self):
-        # Filter the queryset based on a search term
+        user_id = self.request.user.id
+        search_term = self.request.GET.get('search', '')
+
+        cache_key = f"menu_items_for_user_{user_id}_{search_term}"
+        cached_queryset = cache.get(cache_key)
+
+        if cached_queryset is not None:
+            return cached_queryset
+
         queryset = super().get_queryset()
         queryset = queryset.filter(user=self.request.user)
-        search_term = self.request.GET.get('search', None)
+
         if search_term:
             queryset = queryset.filter(title__icontains=search_term)
+
+        # Cache the queryset for a short time. Here, 300 seconds (5 minutes) is used.
+        cache.set(cache_key, queryset, 300)
+
         return queryset
 
 
@@ -214,6 +227,7 @@ class MenuItemUpdateView(LoginRequiredMixin, UpdateView):
     # Form validation for current user
     def form_valid(self, form):
         form.instance.user = self.request.user
+        invalidate_menu_cache(self.request.user.id)
         return super().form_valid(form)
 
 
@@ -227,6 +241,7 @@ class MenuItemCreateView(LoginRequiredMixin, CreateView):
     # Form validation for current user
     def form_valid(self, form):
         form.instance.user = self.request.user
+        invalidate_menu_cache(self.request.user.id)
         return super().form_valid(form)
 
 
@@ -249,10 +264,10 @@ class NewRecipeRequirementView(LoginRequiredMixin, CreateView):
 
 
 class MenuItemDeleteView(LoginRequiredMixin, DeleteView):
-    # Delete a menu item
-    template_name = "inventoryApp/delete-menu-item.html"
-    model = MenuItem
-    success_url = '/menu'
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        invalidate_menu_cache(self.request.user.id)
+        return response
 
 
 # Define RestaurantSummaryView to display restaurant metrics
