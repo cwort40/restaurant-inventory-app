@@ -13,7 +13,6 @@ def fetch_density(ingredient_name):
     answer = response.choices[0].text.strip()
 
     # Parse the answer to extract the density value.
-    # NOTE: This will require further refinement based on the type of responses you receive.
     try:
         density_value = float(answer.split()[0])
         return density_value

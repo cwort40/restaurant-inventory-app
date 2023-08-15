@@ -1,7 +1,8 @@
+import difflib
+
 from inventoryApp.api.openai_client import fetch_density
 from inventoryApp.constants.densities import INGREDIENT_DENSITIES
-from inventoryApp.constants.measurements import UNIT_CONVERSIONS, VOLUME_UNITS, MASS_UNITS
-import difflib
+from inventoryApp.constants.measurements import UNIT_CONVERSIONS, VOLUME_UNITS
 
 
 class UnitConversionUtil:
@@ -19,16 +20,24 @@ class UnitConversionUtil:
 
     @staticmethod
     def get_density(ingredient_name):
-        # density = INGREDIENT_DENSITIES.get(ingredient_name)
-        # if density is None:
-        #     best_match = UnitConversionUtil.get_best_match(ingredient_name)
-        #     if best_match:
-        #         density = INGREDIENT_DENSITIES[best_match]
-        #     else:
-        #         fetched_density = fetch_density(ingredient_name)
-        #         density = fetched_density if fetched_density is not None else 1  # Density of water as default
-        # return density
-        return 1
+        from inventoryApp.models import Ingredient
+        ingredient = Ingredient.objects.get(name=ingredient_name)
+
+        # If density exists in ingredient, return it
+        if ingredient and ingredient.density:
+            return ingredient.density
+
+        density = INGREDIENT_DENSITIES.get(ingredient_name)
+        if density is None:
+            best_match = UnitConversionUtil.get_best_match(ingredient_name)
+            if best_match:
+                density = INGREDIENT_DENSITIES[best_match]
+            else:
+                fetched_density = fetch_density(ingredient_name)
+                ingredient.density = fetched_density
+                ingredient.save()
+                density = fetched_density if fetched_density is not None else 1  # Density of water as default
+        return density
 
     @staticmethod
     def convert_to_common_unit(quantity, unit, ingredient_name):

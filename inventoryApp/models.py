@@ -29,6 +29,7 @@ class Ingredient(models.Model):
     unit = models.CharField(max_length=20, choices=UNITS_OF_MEASUREMENT, default='lb')
     price_per_unit = models.FloatField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    density = models.FloatField(null=True, blank=True)
 
     def get_absolute_url(self):
         return "/ingredients"
