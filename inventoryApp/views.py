@@ -196,6 +196,7 @@ class MenuListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         # Filter the queryset based on a search term
         queryset = super().get_queryset()
+        queryset = queryset.prefetch_related('reciperequirement_set__ingredient')
         queryset = queryset.filter(user=self.request.user)
         search_term = self.request.GET.get('search', None)
         if search_term:
