@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from chartjs.views.lines import BaseLineChartView
 from django.contrib import messages
@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView, TemplateView
 
@@ -316,7 +317,7 @@ class PurchaseChartView(LoginRequiredMixin, BaseLineChartView):
     def get_data(self):
         # Return the quantities purchased of each menu item as data.
         data = []
-        today = datetime.now().date()
+        today = timezone.now().date()
         one_week_ago = today - timedelta(days=7)
 
         for item in MenuItem.objects.all():
