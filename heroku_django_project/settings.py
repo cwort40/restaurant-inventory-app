@@ -15,6 +15,8 @@ from pathlib import Path
 import django_heroku
 from dotenv import load_dotenv
 
+import dj_database_url
+
 DEBUG=True
 
 load_dotenv()
@@ -77,14 +79,22 @@ WSGI_APPLICATION = 'heroku_django_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# for local dev
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'restaurant_inventory_tracker',
+#         'USER': os.environ.get('DB_USER'),
+#         'PASSWORD': os.environ.get('DB_PW'),
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+# for production
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'restaurant_inventory_tracker',
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PW'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL')),
     }
 }
 
