@@ -1,0 +1,165 @@
+{
+  "ingredients": [
+    {
+      "name": "Tomato",
+      "quantity": 80,
+      "unit": "oz",
+      "price_per_unit": 0.5
+    },
+    {
+      "name": "Cheese",
+      "quantity": 30,
+      "unit": "lb",
+      "price_per_unit": 1.0
+    },
+    {
+      "name": "Lettuce",
+      "quantity": 60,
+      "unit": "oz",
+      "price_per_unit": 0.7
+    },
+    {
+      "name": "Bread",
+      "quantity": 40,
+      "unit": "lb",
+      "price_per_unit": 1.5
+    },
+    {
+      "name": "Chicken",
+      "quantity": 60,
+      "unit": "lb",
+      "price_per_unit": 4.0
+    },
+    {
+      "name": "Olive Oil",
+      "quantity": 16,
+      "unit": "fl-oz",
+      "price_per_unit": 8.0
+    },
+    {
+      "name": "Salt",
+      "quantity": 32,
+      "unit": "oz",
+      "price_per_unit": 0.2
+    },
+    {
+      "name": "Pepper",
+      "quantity": 5,
+      "unit": "tbsp",
+      "price_per_unit": 0.3
+    },
+    {
+      "name": "Milk",
+      "quantity": 2,
+      "unit": "gallon",
+      "price_per_unit": 3.0
+    }
+  ],
+  "menu_items": [
+    {
+      "title": "Tomato Salad",
+      "price": 5.0,
+      "requirements": [
+        {
+          "ingredient_name": "Tomato",
+          "quantity": 4,
+          "unit": "oz"
+        },
+        {
+          "ingredient_name": "Olive Oil",
+          "quantity": 1,
+          "unit": "fl-oz"
+        },
+        {
+          "ingredient_name": "Salt",
+          "quantity": 0.5,
+          "unit": "tsp"
+        }
+      ]
+    },
+    {
+      "title": "Cheese Sandwich",
+      "price": 3.5,
+      "requirements": [
+        {
+          "ingredient_name": "Cheese",
+          "quantity": 4,
+          "unit": "oz"
+        },
+        {
+          "ingredient_name": "Bread",
+          "quantity": 2,
+          "unit": "oz"
+        },
+        {
+          "ingredient_name": "Lettuce",
+          "quantity": 2,
+          "unit": "oz"
+        }
+      ]
+    },
+    {
+      "title": "Chicken Salad",
+      "price": 8.5,
+      "requirements": [
+        {
+          "ingredient_name": "Chicken",
+          "quantity": 6,
+          "unit": "oz"
+        },
+        {
+          "ingredient_name": "Lettuce",
+          "quantity": 4,
+          "unit": "oz"
+        },
+        {
+          "ingredient_name": "Pepper",
+          "quantity": 1,
+          "unit": "tsp"
+        }
+      ]
+    },
+    {
+      "title": "Milkshake",
+      "price": 4.0,
+      "requirements": [
+        {
+          "ingredient_name": "Milk",
+          "quantity": 16,
+          "unit": "fl-oz"
+        },
+        {
+          "ingredient_name": "Salt",
+          "quantity": 0.1,
+          "unit": "tsp"
+        }
+      ]
+    },
+    {
+      "title": "Grilled Chicken Sandwich",
+      "price": 9.0,
+      "requirements": [
+        {
+          "ingredient_name": "Chicken",
+          "quantity": 8,
+          "unit": "oz"
+        },
+        {
+          "ingredient_name": "Bread",
+          "quantity": 3,
+          "unit": "oz"
+        },
+        {
+          "ingredient_name": "Lettuce",
+          "quantity": 2,
+          "unit": "oz"
+        },
+        {
+          "ingredient_name": "Cheese",
+          "quantity": 2,
+          "unit": "oz"
+        }
+      ]
+    }
+  ]
+}
