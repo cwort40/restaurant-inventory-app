@@ -58,7 +58,7 @@
   "menu_items": [
     {
       "title": "Tomato Salad",
-      "price": 5.0,
+      "price": 10.0,
       "requirements": [
         {
           "ingredient_name": "Tomato",
@@ -79,7 +79,7 @@
     },
     {
       "title": "Cheese Sandwich",
-      "price": 3.5,
+      "price": 13.5,
       "requirements": [
         {
           "ingredient_name": "Cheese",
@@ -100,7 +100,7 @@
     },
     {
       "title": "Chicken Salad",
-      "price": 8.5,
+      "price": 18.5,
       "requirements": [
         {
           "ingredient_name": "Chicken",
@@ -121,7 +121,7 @@
     },
     {
       "title": "Milkshake",
-      "price": 4.0,
+      "price": 6.0,
       "requirements": [
         {
           "ingredient_name": "Milk",
@@ -137,7 +137,7 @@
     },
     {
       "title": "Grilled Chicken Sandwich",
-      "price": 9.0,
+      "price": 16.0,
       "requirements": [
         {
           "ingredient_name": "Chicken",
