@@ -50,6 +50,9 @@ class UnitConversionUtil:
         if unit in VOLUME_UNITS:
             return quantity * conversion_value
 
+        if density == 0:
+            density = 1  # avoid divide by 0 error
+
         return quantity * conversion_value / density  # Convert to grams or milliliters
 
     @staticmethod
