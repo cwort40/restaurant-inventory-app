@@ -1,4 +1,4 @@
-from datetime import timedelta
+
 
 from chartjs.views.lines import BaseLineChartView
 from django.contrib import messages
@@ -318,7 +318,7 @@ class PurchaseChartView(LoginRequiredMixin, BaseLineChartView):
         # Return the quantities purchased of each menu item as data.
         data = []
         today = timezone.now().date()
-        one_week_ago = today - timedelta(days=7)
+        one_week_ago = today - timezone.timedelta(days=7)
 
         for item in MenuItem.objects.all():
             item_purchases = Purchase.objects.filter(menu_item=item, timestamp__gte=one_week_ago, user=self.request.user)
