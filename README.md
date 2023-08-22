@@ -40,10 +40,9 @@ Contributions are welcome! If you have an idea for a new feature or want to repo
 
 Here are some potential future enhancements for the inventory management system:
 
-1. **Alert system:** Implement a notification system to alert users when certain ingredients are running low or have run out.
-2. **API:** Create a RESTful API to allow other applications to interact with the inventory management system.
-3. **User roles:** Add support for different user roles (e.g. manager, chef, waiter) with different levels of access to the inventory management system.
-4. **Order tracking:** Develop a system to track ingredient orders and their delivery status.
-5. **Real-time inventory tracking:** Add support for real-time inventory tracking to provide up-to-date information on ingredient availability.
-6. **Recipe cost tracking:** Enable recipe cost tracking to help users determine the profitability of menu items.
+1. **API:** Create a RESTful API to allow other applications to interact with the inventory management system.
+2. **User roles:** Add support for different user roles (e.g. manager, chef, waiter) with different levels of access to the inventory management system.
+3. **Order tracking:** Develop a system to track ingredient orders and their delivery status.
+4. **Real-time inventory tracking:** Add support for real-time inventory tracking to provide up-to-date information on ingredient availability.
+5. **Recipe cost tracking:** Enable recipe cost tracking to help users determine the profitability of menu items.
 
