@@ -4,6 +4,8 @@ from inventoryApp.constants.measurements import UNITS_OF_MEASUREMENT
 from inventoryApp.constants.util import UnitConversionUtil
 from django.contrib.auth.models import User
 
+from django.core.cache import cache
+
 
 # Create your models here.
 class MenuItem(models.Model):
@@ -53,10 +55,18 @@ class RecipeRequirement(models.Model):
         return "/menu"
 
     def enough(self):
+        cache_key = f'enough_{self.pk}'
+        cached_result = cache.get(cache_key)
+        if cached_result is not None:
+            return cached_result
+
         required_quantity = UnitConversionUtil.convert_to_common_unit(self.quantity, self.unit, self.ingredient.name)
         available_quantity = UnitConversionUtil.convert_to_common_unit(self.ingredient.quantity, self.ingredient.unit,
                                                                        self.ingredient.name)
-        return required_quantity <= available_quantity
+
+        result = required_quantity <= available_quantity
+        cache.set(cache_key, result, 60 * 15)  # cache the result for 15 minutes
+        return result
 
 
 class Purchase(models.Model):
